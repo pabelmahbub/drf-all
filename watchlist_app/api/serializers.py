@@ -2,12 +2,21 @@
 
 from rest_framework import serializers
 from watchlist_app.models import Movie
+from django.utils.timezone import now
 
 class MovieSerializer(serializers.ModelSerializer):
+    #creating a new field:
+    len_name = serializers.SerializerMethodField()
+    
     class Meta:
         model = Movie
         fields = '__all__'
         
+        
+    #for len_name:
+    def get_len_name(self, obj):
+        return len(obj.name)
+    
     # If needed to hide a field from the view:
     # class Meta:
     #     model = Movie
