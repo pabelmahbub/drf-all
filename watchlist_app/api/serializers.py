@@ -1,41 +1,22 @@
 #A. Model serializer
 
 from rest_framework import serializers
-from watchlist_app.models import Movie
-from django.utils.timezone import now
+from watchlist_app.models import WatchList
+from watchlist_app.models import StreamPlatform
 
-class MovieSerializer(serializers.ModelSerializer):
-    #creating a new field:
-    len_name = serializers.SerializerMethodField()
+class WatchListSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = Movie
+        model = WatchList
         fields = '__all__'
-        
-        
-    #for len_name:
-    def get_len_name(self, obj):
-        return len(obj.name)
-    
-    # If needed to hide a field from the view:
-    # class Meta:
-    #     model = Movie
-    #     fields = ['id', 'name', 'description', 'active']
-    #      OR
-    #     exclude=['active']
-        
-    
-    def validate_name(self, value):
-        if len(value) < 2:
-            raise serializers.ValidationError("Name is too short")
-        else:
-            return value
-     
-    def validate(self, data):
-        if data['name'] ==  data['description']:
-            raise serializers.ValidationError("Title and Description cannot be the same")
-        else:
-            return data  
+
+class StreamPlatformSerializer(serializers.ModelSerializer):
+    #myWatchList same as model related name:
+    myWatchList = WatchListSerializer(many=True, read_only=True)
+    class Meta:
+        model = StreamPlatform
+        fields = '__all__'        
+  
 
 
 # B.Serializer.serializers

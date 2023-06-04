@@ -9,9 +9,12 @@ from django.urls import path, include
 
 
 # for Class views(chagne only in urls.py and views.py):
-from watchlist_app.api.views import MovieListAV, MovieDetailsAV
+from watchlist_app.api.views import WatchListAV, WatchListDetailAV, StreamPlatformAV, StreamPlatformDetailAV
 
 urlpatterns = [
-    path('list/', MovieListAV.as_view(), name= "movie_list"),
-    path('<int:pk>', MovieDetailsAV.as_view(), name= "movie_detail"),
+    path('list/', WatchListAV.as_view(), name= "movie_list"),
+    path('<int:pk>', WatchListDetailAV.as_view(), name= "movie_detail"),
+    
+    path('stream/', StreamPlatformAV.as_view(), name= "stream_list"),
+    path('<int:pk>', StreamPlatformDetailAV.as_view(), name= "stream_detail"),
 ]
