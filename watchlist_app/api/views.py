@@ -1,10 +1,34 @@
-#1.Class Based View:
+#1.Class Based View WatchListAV + WatchListDetailAV, StreamPlatformAV + StreamPlatformDetailAV :
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
-from watchlist_app.models import WatchList, StreamPlatform
-from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer
+from watchlist_app.models import WatchList, StreamPlatform, Review
+from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
+#1.Mixin Based View only for Review Model:
+from rest_framework import mixins
+from rest_framework import generics
+
+#1.Mixin Based View only for Review Model:
+class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
+
+class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+
+    def get(self, request, *args, **kwargs):
+        return self.retrieve(request, *args, **kwargs)
+
+
+#1.Class Based View WatchListAV + WatchListDetailAV, StreamPlatformAV + StreamPlatformDetailAV :
 class WatchListAV(APIView):
     def get(self, request):
         movies = WatchList.objects.all()

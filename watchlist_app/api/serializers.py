@@ -1,11 +1,16 @@
 #A. Model serializer
 
 from rest_framework import serializers
-from watchlist_app.models import WatchList
-from watchlist_app.models import StreamPlatform
+from watchlist_app.models import WatchList, StreamPlatform, Review
 
+
+
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = "__all__"
 class WatchListSerializer(serializers.ModelSerializer):
-    
+    movieReviews = ReviewSerializer(many=True, read_only= True)
     class Meta:
         model = WatchList
         fields = '__all__'
