@@ -2,33 +2,63 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework import generics
 from watchlist_app.models import WatchList, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
 
-#1.Mixin Based View only for Review Model:
-from rest_framework import mixins
+#3.Generic APIView = APIView[Best and Easy Way]-https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-generic-class-based-views
 from rest_framework import generics
 
-#1.Mixin Based View only for Review Model:
-class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+#2.Mixin Based View only for Review Model:https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-mixins
+# from rest_framework import mixins
+# from rest_framework import generics
+
+#3. For Generic APIView for Review Model
+
+class ReviewCreate(generics.CreateAPIView):
+    serializer_class = ReviewSerializer
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        movie= WatchList.objects.get(pk=pk)
+        serializer.save(watchList =movie)
+        #watchList is the item of Review model.
+
+class ReviewList(generics.ListCreateAPIView):
+    #queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    
+    def get_queryset(self):
+        pk = self.kwargs['pk']
+        return Review.objects.filter(watchList=pk)
+        #watchList is the item of Review model.
+
+
+class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    
+    
+#2.Mixin Based View only for Review Model:
+# class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.list(request, *args, **kwargs)
+#     def get(self, request, *args, **kwargs):
+#         return self.list(request, *args, **kwargs)
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
 
-class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
-    queryset = Review.objects.all()
-    serializer_class = ReviewSerializer
+# class ReviewDetail(mixins.RetrieveModelMixin,generics.GenericAPIView):
+#     queryset = Review.objects.all()
+#     serializer_class = ReviewSerializer
 
-    def get(self, request, *args, **kwargs):
-        return self.retrieve(request, *args, **kwargs)
+#     def get(self, request, *args, **kwargs):
+#         return self.retrieve(request, *args, **kwargs)
 
 
-#1.Class Based View WatchListAV + WatchListDetailAV, StreamPlatformAV + StreamPlatformDetailAV :
+#1.Class Based View WatchListAV + WatchListDetailAV, StreamPlatformAV + StreamPlatformDetailAV :https://www.django-rest-framework.org/tutorial/3-class-based-views/#rewriting-our-api-using-class-based-views
 class WatchListAV(APIView):
     def get(self, request):
         movies = WatchList.objects.all()
