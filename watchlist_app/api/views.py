@@ -1,10 +1,16 @@
 #1.Class Based View WatchListAV + WatchListDetailAV, StreamPlatformAV + StreamPlatformDetailAV :
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import status
+from django.shortcuts import get_object_or_404
+from rest_framework.exceptions import ValidationError
+
+from rest_framework import filters, generics, status, viewsets
+from watchlist_app.api  import  permissions, serializers
 from rest_framework import generics
 from watchlist_app.models import WatchList, StreamPlatform, Review
 from watchlist_app.api.serializers import WatchListSerializer, StreamPlatformSerializer, ReviewSerializer
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
+from watchlist_app.api.permissions import AdminOrReadOnly, IsReviewUserOrReadOnly
 
 #3.Generic APIView = APIView[Best and Easy Way]-https://www.django-rest-framework.org/tutorial/3-class-based-views/#using-generic-class-based-views
 from rest_framework import generics
@@ -18,26 +24,50 @@ from rest_framework import generics
 class ReviewCreate(generics.CreateAPIView):
     serializer_class = ReviewSerializer
     
+    def get_queryset(self):
+        return Review.objects.all()
+    
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
         movie= WatchList.objects.get(pk=pk)
-        serializer.save(watchList =movie)
+        
+        user = self.request.user
+        review_queryset = Review.objects.filter(watchlist=movie, review_user=user)
+        
+        if review_queryset.exists():
+            raise ValidationError('Review already exists')
+        
+        serializer.save(watchlist = movie, review_user = user)
         #watchList is the item of Review model.
+
+
 
 class ReviewList(generics.ListCreateAPIView):
     #queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    #object level permission-in class/api view:https://www.django-rest-framework.org/api-guide/permissions/#object-level-permissions
+    permission_classes = [IsAuthenticatedOrReadOnly]
     
     def get_queryset(self):
         pk = self.kwargs['pk']
-        return Review.objects.filter(watchList=pk)
+        return Review.objects.filter(watchlist=pk)
         #watchList is the item of Review model.
 
 
 class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
-    
+    #object level permission:https://www.django-rest-framework.org/api-guide/permissions/#object-level-permissions
+    permission_classes = [IsReviewUserOrReadOnly]
+   
+   
+
+class UserReview(generics.ListAPIView):
+    serializer_class = serializers.ReviewSerializer
+
+    def get_queryset(self):
+        username = self.request.query_params.get('username', None)
+        return Review.objects.filter(review_user__username=username)    
     
 #2.Mixin Based View only for Review Model:
 # class ReviewList(mixins.ListModelMixin,mixins.CreateModelMixin,generics.GenericAPIView):

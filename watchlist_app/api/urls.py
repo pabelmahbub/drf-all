@@ -1,4 +1,6 @@
 from django.urls import path, include
+from rest_framework.routers import DefaultRouter
+from watchlist_app.api import views
 # for Functiona views(chagne only in urls.py and views.py):
 
 # from watchlist_app.api.views import movie_list, movie_details
@@ -10,6 +12,11 @@ from django.urls import path, include
 
 # for Class views(chagne only in urls.py and views.py):
 from watchlist_app.api.views import WatchListAV, WatchListDetailAV, StreamPlatformAV, StreamPlatformDetailAV, ReviewCreate, ReviewList, ReviewDetail
+
+
+# router = DefaultRouter()
+# router.register('stream/', views.StreamPlatformVS, basename='streamplatform')
+
 
 urlpatterns = [
     path('list/', WatchListAV.as_view(), name= "movie_list"),
