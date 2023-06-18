@@ -29,15 +29,23 @@ class ReviewCreate(generics.CreateAPIView):
     
     def perform_create(self, serializer):
         pk = self.kwargs.get('pk')
-        movie= WatchList.objects.get(pk=pk)
+        watchlist= WatchList.objects.get(pk=pk)
         
-        user = self.request.user
-        review_queryset = Review.objects.filter(watchlist=movie, review_user=user)
+        review_user = self.request.user
+        review_queryset = Review.objects.filter(watchlist = watchlist, review_user=review_user)
         
         if review_queryset.exists():
             raise ValidationError('Review already exists')
         
-        serializer.save(watchlist = movie, review_user = user)
+        if watchlist.number_rating == 0:
+            watchlist.avg_rating = serializer.validated_data['rating']
+        else:
+            watchlist.avg_rating = (watchlist.avg_rating  +  serializer.validated_data['rating'])/2
+            
+        watchlist.number_rating = watchlist.number_rating + 1
+        watchlist.save()
+        
+        serializer.save(watchlist=watchlist, review_user=review_user)
         #watchList is the item of Review model.
 
 
