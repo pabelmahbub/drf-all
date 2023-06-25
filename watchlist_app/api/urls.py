@@ -1,7 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from watchlist_app.api import views
-# for Functiona views(chagne only in urls.py and views.py):
+# for Functional views(chagne only in urls.py and views.py):
 
 # from watchlist_app.api.views import movie_list, movie_details
 #urlpatterns = [
@@ -20,7 +20,7 @@ from watchlist_app.api.views import WatchListAV, WatchListDetailAV, StreamPlatfo
 
 urlpatterns = [
     path('list/', WatchListAV.as_view(), name= "movie_list"),
-    path('<int:pk>/', WatchListDetailAV.as_view(), name= "movie_detail"),
+    path('list/<int:pk>/', WatchListDetailAV.as_view(), name= "movie_detail"),
     
     path('stream/', StreamPlatformAV.as_view(), name= "stream_list"),
     path('stream/<int:pk>/', StreamPlatformDetailAV.as_view(), name= "stream_detail"),

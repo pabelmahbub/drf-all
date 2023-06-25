@@ -42,3 +42,6 @@ def movie_details(request, pk):
         movieOne = MovieOne.objects.get(pk=pk)
         movieOne.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    
+    

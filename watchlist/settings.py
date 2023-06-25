@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'watchlist_app',
     'user_app',
+    'newApp',
     'corsheaders',
 ]
 

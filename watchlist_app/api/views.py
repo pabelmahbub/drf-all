@@ -66,7 +66,7 @@ class ReviewDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     #object level permission:https://www.django-rest-framework.org/api-guide/permissions/#object-level-permissions
-    permission_classes = [IsReviewUserOrReadOnly]
+    #permission_classes = [IsReviewUserOrReadOnly]
    
    
 
@@ -131,7 +131,7 @@ class WatchListDetailAV(APIView):
             
     def delete(self, request, pk):
         movie = WatchList.objects.get(pk=pk)
-        WatchList.delete()
+        movie.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)        
 
 ##for StreamPlatform:
