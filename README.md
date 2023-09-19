@@ -353,7 +353,7 @@ DATABASES = {
         },
     }
 }
-Now in dry app:
+Now in drf app:
 1. python manage.py makemigrations
 2. python manage.py migrate
    ```
