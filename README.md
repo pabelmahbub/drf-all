@@ -327,7 +327,36 @@ class ReviewList(generics.ListCreateAPIView):
     def get_queryset(self):
         pk = self.kwargs['pk']
         return Review.objects.filter(watchList=pk)
-  ```   
+  ```
+
+
+# How to install mySQL in Mac:
+```
+1.in ROOT terminal: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+2. In terminal: brew install pkg-config
+3. In terminal: brew install mysql
+4. In terminal:export MYSQLCLIENT_CFLAGS=-I/usr/local/opt/mysql/include
+5. In terminal: export MYSQLCLIENT_LDFLAGS=-L/usr/local/opt/mysql/lib
+6. In drf environment terminal: pip install mysqlclient
+
+Change db:
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'drfAll',
+        'USER': 'root',
+        'PASSWORD':'japan56789',
+        'HOST': 'localhost',  # Or the IP address of your MySQL server
+        'PORT': '3306',  # Or the appropriate port for your MySQL instance
+        'OPTIONS': {
+            'charset': 'utf8mb4',
+        },
+    }
+}
+Now in dry app:
+1. python manage.py makemigrations
+2. python manage.py migrate
+   ```
 
 
 
