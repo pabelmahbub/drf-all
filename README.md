@@ -14,10 +14,8 @@ django rest framework porject:
 ```pip install djangorestframework-jsonapi```
 
 5. If pip upgrading needed: ```pip install --upgrade pip```
-
-5a.  root app (apiproject) in settings: add in ```INSTALLED_APP= ['rest_framework']```
-
 6. create a project of django by: ```django-admin startproject apiproject(our root app name)```
+7. 5a.  root app (apiproject) in settings: add in ```INSTALLED_APP= ['rest_framework']```
 
 ```cd apiproject```
 
