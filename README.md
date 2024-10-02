@@ -1,34 +1,7 @@
 # drf-all
-django rest framework porject:
-1. create a folder in pc: ```django-rest-framework```
 
-2. open in vs code in terminal and create a virtual env: 
-```python3 -m venv drenv(drenv is our venv name)```
-
-3. Now activate venv in terminal by, 
-```source drenv/bin/activate(for mac)```
-```drenv/Scripts/activate (for windows)```
-
-4. Need to install django in venv: ```pip install django djangorestframework```
-[if error of cpuldn't find a version that satifies the requirements djangorest.... 
-```pip install djangorestframework-jsonapi```
-
-5. If pip upgrading needed: ```pip install --upgrade pip```
-6. create a project of django by: ```django-admin startproject apiproject(our root app name)```
-7. 5a.  root app (apiproject) in settings: add in ```INSTALLED_APP= ['rest_framework']```
-
-```cd apiproject```
-
-```python3 manage.py migrate```
-
-```python3 manage.py startapp myapp(app name)```
-
-7. create a superuser: ```python3 manage.py createsuperuser(name,email,password) and app will start in 127.0.0.0/admijn```
-
-```python3 manage.py runserver```
-
+## steps:
 ```
-steps:
  a. create a floder in Desktop named my_django_project_october
  b. open vs code and terminal
  c. python -m venv venv to create virtual env
@@ -41,9 +14,11 @@ steps:
  i. python manage,py startapp courses/tutorial/...(api app)
  j. python manage.py8 createsuperuser
  k. python manage.py runserver
-
 ```
-to run this app again in vs code: folder structure(my_django_project-october -> my_django_project-october -> courses)
+
+
+## to run this app again in vs code: folder structure(my_django_project-october -> my_django_project-october -> courses)
+```
 * PS C:\Users\rahmanmuhammadmahbub\Desktop\my_django_project-october> python manage.py runserver[currently inside main folder in Desktop named my_django_project-october: need to go to main app named my_django_project-october)
 * C:\Users\rahmanmuhammadmahbub\AppData\Local\Programs\Python\Python312\python.exe: can't open file 'C:\\Users\\rahmanmuhammadmahbub\\Desktop\\my_django_project-october\\manage.py': [Errno 2] No such file or directory
 1. PS C:\Users\rahmanmuhammadmahbub\Desktop\my_django_project-october> python -m venv venv
@@ -54,10 +29,8 @@ to run this app again in vs code: folder structure(my_django_project-october -> 
 6. python manage.py runserver
 ```
 
-
+## After cloning a Django app from GitHub, follow these steps to set it up and run it in your local environment:
 ```
-After cloning a Django app from GitHub, follow these steps to set it up and run it in your local environment:
-
 1. Clone the Repository
 If you haven't cloned the repository yet, use the following command:
 
@@ -112,6 +85,43 @@ python manage.py collectstatic
 Once these steps are complete, your Django app should be up and running.
 
 ```
+
+
+
+django rest framework porject:
+1. create a folder in pc: ```django-rest-framework```
+
+2. open in vs code in terminal and create a virtual env: 
+```python3 -m venv drenv(drenv is our venv name)```
+
+3. Now activate venv in terminal by, 
+```source drenv/bin/activate(for mac)```
+```drenv/Scripts/activate (for windows)```
+
+4. Need to install django in venv: ```pip install django djangorestframework```
+[if error of cpuldn't find a version that satifies the requirements djangorest.... 
+```pip install djangorestframework-jsonapi```
+
+5. If pip upgrading needed: ```pip install --upgrade pip```
+6. create a project of django by: ```django-admin startproject apiproject(our root app name)```
+7. 5a.  root app (apiproject) in settings: add in ```INSTALLED_APP= ['rest_framework']```
+
+```cd apiproject```
+
+```python3 manage.py migrate```
+
+```python3 manage.py startapp myapp(app name)```
+
+7. create a superuser: ```python3 manage.py createsuperuser(name,email,password) and app will start in 127.0.0.0/admijn```
+
+```python3 manage.py runserver```
+
+
+
+
+
+
+
 
 ## Easy steps to create a GET,CREATE,DELETE API:
 1. In myapp -> models.py:
